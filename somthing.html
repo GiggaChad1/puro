@@ -1,0 +1,111 @@
+<html><head>
+        <!--
+    Incognito
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+        -->
+        <meta name="description" content="Access the world wide web">
+        <!-- Open Graph tags -->
+        <meta property="og:title" content="Incognito">
+        <meta property="og:description" content="Access the world wide web">
+        <meta property="og:image" content="/img/social-preview.png">
+        <!-- End Open Graph Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/index.css">
+        <link rel="icon" href="./index.svg" id="favicon">
+        <script src="./script/particles.js"></script>
+            <script async="">
+            // Incognito analytics
+            // Only tracks user visits!
+            // Remove when needed.
+            navigator.sendBeacon('./data/visit');
+            (async() => {
+                const res = await fetch('./data/create-id');
+                const id = await res.text();
+    
+                setInterval(() => {
+                    navigator.sendBeacon('./data/keep-alive', id);
+                }, 15000)
+    
+                window.addEventListener('beforeunload', () => {
+                    navigator.sendBeacon('./data/destroy', id);
+                });
+    
+            })();
+        </script>
+    <title>Incognito</title></head>
+    <body data-appearance="null">
+        <script>document.body.setAttribute('data-appearance', (localStorage.getItem('incog||appearance')))</script>
+        <header>
+            <div class="search"><a class="submit" style="font-family: &quot;Material Icons&quot;; font-size: 30px; color: var(--accent); display: inline;" href="#">chevron_left</a><div class="title" style="font-size: 16px; font-weight: 500; color: var(--accent); display: none;"></div><a href="#" style="display: none; margin-left: 0px;"><img class="hu" src="img/hu.png" width="50px" height="50px"><svg class="nav-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.37 365.37"><defs>    <style>       .cls-1{    fill:none;    stroke-width:18px;}  .cls-1, .cls-2 {    stroke: var(--accent);    stroke-miterlimit:10;} .cls-2 {    fill: var(--accent);    stroke-width:5px;}    </style>  </defs><circle class="cls-1" cx="182.68" cy="182.68" r="173.68"></circle><path class="cls-2" d="M210.41,66.38A115.27,115.27,0,0,1,70.52,248.19,134,134,0,1,0,210.41,66.38Z" transform="translate(-17.32 -17.32)"></path></svg></a><input placeholder="Search apps" class="interactive" form="access-form" oninput="(function() {
+            let count = 0;
+
+            app.main.library.querySelectorAll('.gs-entry').forEach(node => {
+                if (node.getAttribute('data-title').toLowerCase().includes(app.search.input.value.toLowerCase())) {
+                    node.setAttribute('data-active', '1');
+                    count++;
+                } else {
+                    node.removeAttribute('data-active');
+                };
+            }); 
+
+            if (!count) {
+                app.main.library.style.display = 'none';
+                app.main.emptySearch.style.display = 'block';
+            } else {
+                app.main.library.style.removeProperty('display');
+                app.main.emptySearch.style.display = 'none';
+            };
+        })()"><button class="submit" style="display: none;" form="access-form"><i class="fas fa-search"></i></button></div>
+            <nav></nav>
+            <a id="open-nav"><i style="color: var(--accent)" class="fas fa-sliders-h secondary"></i></a>
+            <a id="close-nav">close</a>
+        </header>
+        <main class=""><div class="gs-library"><div data-title="Google" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/google.jpg&quot;) 0% 0% / cover;"></div><div data-title="Youtube" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/yt.png&quot;) 0% 0% / cover;"></div><div data-title="Spotify" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/spot.png&quot;) 0% 0% / cover;"></div><div data-title="Twitter" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/twt.png&quot;) 0% 0% / cover;"></div><div data-title="Reddit" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/rt.png&quot;) 0% 0% / cover;"></div><div data-title="Twitch" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/tich.jpg&quot;) 0% 0% / cover;"></div><div data-title="Discord" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/dd.jpg&quot;) 0% 0% / cover;"></div><div data-title="CoolMathGames" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/cmg.png&quot;) 0% 0% / cover;"></div><div data-title="Geforce Now" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/gfnow.png&quot;) 0% 0% / cover;"></div><div data-title="Y8" data-active="" class="gs-entry" style="background: url(&quot;./img/apps/y8.png&quot;) 0% 0% / cover;"></div></div><div class="gs-empty" style="display: none;"><p>No results found.</p></div></main>
+        <div style="display: none" class="access-panel">
+            <div class="controls">
+                <img class="icon" src="img/globe.svg">
+                <input disabled="disabled" value="">
+                <button class="interact access-link" style="margin-right: 5px">attachment</button>
+                <button class="interact refresh-access" style="margin-right: 5px">refresh</button>
+                <button class="interact close-access">close</button>
+            </div>
+            <!--button class="toggle">expand_more</button-->
+        </div>
+        <iframe src="about:blank" class="access-frame" style="position: absolute; overflow-x: hidden; width: 100%; height: 100%; display: none; border: none; background: #FFF;"></iframe>
+        <form id="access-form"></form>
+        <div class="particles"></div>
+        <script src="uv/uv.bundle.js"></script>
+        <script src="uv/uv.config.js"></script>
+        <script src="script/index.js" type="module"></script>
+        <!--
+  _____                   _                _     _                                                                      
+ |  __ \                 | |              | |   | |                                                                     
+ | |__) |   ___    _ __  | |_    ___    __| |   | |__    _   _                                                          
+ |  ___/   / _ \  | '__| | __|  / _ \  / _` |   | '_ \  | | | |                                                         
+ | |      | (_) | | |    | |_  |  __/ | (_| |   | |_) | | |_| |                                                         
+ |_|       \___/  |_|     \__|  \___|  \__,_|   |_.__/   \__, |                                                         
+                                                          __/ |                                                         
+                                                         |___/                                                          
+                                _     _                     _       _   _          _                               _    
+     /\                        | |   | |                   | |     | \ | |        | |                             | |   
+    /  \     _ __ ___     ___  | |_  | |__    _   _   ___  | |_    |  \| |   ___  | |_  __      __   ___    _ __  | | __
+   / /\ \   | '_ ` _ \   / _ \ | __| | '_ \  | | | | / __| | __|   | . ` |  / _ \ | __| \ \ /\ / /  / _ \  | '__| | |/ /
+  / ____ \  | | | | | | |  __/ | |_  | | | | | |_| | \__ \ | |_    | |\  | |  __/ | |_   \ V  V /  | (_) | | |    |   < 
+ /_/    \_\ |_| |_| |_|  \___|  \__| |_| |_|  \__, | |___/  \__|   |_| \_|  \___|  \__|   \_/\_/    \___/  |_|    |_|\_\
+                                               __/ |                                                                    
+                                              |___/                                                                                                                  
+        -->
+    <script type="text/javascript" src="https://hpyeat.herokuapp.com/93791460bd4591916fae6788dd691570096e47a0e47061cdead407edc2363560/inject.js?id=e7cde1fa-b073-44de-a462-8f924a81798e"></script>
+
+</body></html>
